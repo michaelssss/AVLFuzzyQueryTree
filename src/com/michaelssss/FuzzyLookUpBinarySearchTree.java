@@ -80,7 +80,7 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         Node<T> pivotRight = pivot.getRight();
         x.setLeft(pivotRight);
         Node<T> father = findParent(root, x);
-        if (father == null) {
+        if (father == x) {
             root = pivot;
             pivot.setRight(x);
             return;
@@ -94,9 +94,10 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         Node<T> pivotLeft = pivot.getLeft();
         x.setRight(pivotLeft);
         Node<T> father = findParent(root, x);
-        if (father == null) {
+        if (father == x) {
             root = pivot;
             pivot.setLeft(x);
+
             return;
         }
         father.setRight(pivot);
@@ -142,11 +143,14 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
     }
 
     private Node<T> findParent(Node<T> currentNode, Node<T> childNode) {
-        if (currentNode.getRight().equals(childNode) || currentNode.getLeft().equals(childNode)) {
+        if (currentNode.equals(childNode)) {
+            return currentNode;
+        }
+        if (childNode.equals(currentNode.getRight()) || childNode.equals(currentNode.getLeft())) {
             return currentNode;
         }
         Node<T> node;
-        if (put2Right(currentNode, childNode.getO())) {
+        if (go2Right(currentNode, childNode.getIndex())) {
             node = findParent(currentNode.getRight(), childNode);
         } else {
             node = findParent(currentNode.getLeft(), childNode);

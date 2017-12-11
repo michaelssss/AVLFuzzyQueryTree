@@ -26,8 +26,8 @@ public class Main {
         fuzzyLookUpContainer.put(testObject5);
         fuzzyLookUpContainer.put(testObject6);
         fuzzyLookUpContainer.put(testObject7);
-//        fuzzyLookUpContainer.put(testObject8);
-//        fuzzyLookUpContainer.put(testObject9);
+        fuzzyLookUpContainer.put(testObject8);
+        fuzzyLookUpContainer.put(testObject9);
 
 //        map.put("1", testObject);
 //        map.put("2", testObject1);
