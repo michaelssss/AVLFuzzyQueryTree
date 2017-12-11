@@ -1,34 +1,43 @@
 package com.michaelssss;
 
-import java.util.Random;
-
 public class Main {
 
     public static void main(String[] args) {
         FuzzyLookUpContainer fuzzyLookUpContainer = new FuzzyLookUpBinarySearchTree();
         FuzzyLookUpContainer fuzzyLookUpContainer1 = new FuzzyLookUpBinaryTree();
-        Random random = new Random();
+        FuzzyLookUpContainer fuzzyLookUpContainer2 = new FuzzyLookUpList();
+        int round = 50000;
         long begin = System.currentTimeMillis();
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < round; i++) {
             TestObject testObject = new TestObject(Integer.toString(i));
             fuzzyLookUpContainer.put(testObject);
         }
         System.out.println("build avl tree cost time: " + Long.toString(System.currentTimeMillis() - begin));
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < round; i++) {
             TestObject testObject = new TestObject(Integer.toString(i));
             fuzzyLookUpContainer1.put(testObject);
         }
         System.out.println("build binary tree cost time: " + Long.toString(System.currentTimeMillis() - begin));
+        for (int i = 0; i < round; i++) {
+            TestObject testObject = new TestObject(Integer.toString(i));
+            fuzzyLookUpContainer2.put(testObject);
+        }
+        System.out.println("build FuzzyLookUpList cost time: " + Long.toString(System.currentTimeMillis() - begin));
         begin = System.currentTimeMillis();
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < round; i++) {
             fuzzyLookUpContainer.lookUp(new TestObject(Integer.toString(i)));
         }
         System.out.println("avl queryTime:" + Long.toString(System.currentTimeMillis() - begin));
         begin = System.currentTimeMillis();
-        for (int i = 0; i < 50000; i++) {
+        for (int i = 0; i < round; i++) {
             fuzzyLookUpContainer1.lookUp(new TestObject(Integer.toString(i)));
         }
         System.out.println("binary queryTime:" + Long.toString(System.currentTimeMillis() - begin));
+        begin = System.currentTimeMillis();
+        for (int i = 0; i < round; i++) {
+            fuzzyLookUpContainer2.lookUp(new TestObject(Integer.toString(i)));
+        }
+        System.out.println("FuzzyLookUpList queryTime:" + Long.toString(System.currentTimeMillis() - begin));
 //        SimpleMap<String, TestObject> map = new SimpleMap<>(64, 0.001f);
 
 //        map.put("1", testObject);

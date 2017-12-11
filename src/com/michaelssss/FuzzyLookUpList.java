@@ -5,34 +5,40 @@ package com.michaelssss;
  * @since 2017/11/30
  */
 public class FuzzyLookUpList extends AbstractFuzzyLookUp implements FuzzyLookUpContainer {
-    private Object[] ts;
+    private TestObject[] testObjects;
 
     public FuzzyLookUpList() {
-        ts = new Object[0];
+        testObjects = new TestObject[64];
     }
 
     @Override
     public TestObject[] lookUp(TestObject value) {
-        Object[] objects = new Object[0];
-        for (Object o : ts) {
-            Object[] attributes = accessPublicValue(o);
-            for (Object attribute : attributes) {
-                if (value.getA().contains(((TestObject) attribute).getA())) {
-                    objects = putValue2Arrays(objects, o);
-                }
+        for (TestObject o : testObjects) {
+            if (value.getA().contains(o.getA())) {
+                testObjects = new TestObject[]{
+                        o
+                };
+                break;
             }
         }
-        return (TestObject[]) objects;
+        return testObjects;
     }
 
     @Override
     public boolean put(TestObject t) {
-        try {
-            ts = putValue2Arrays(ts, t);
-        } catch (Exception e) {
-            return false;
+        int length = 0;
+        int capacity = testObjects.length;
+        for (; length < capacity; length++) {
+            if (testObjects[length] == null) break;
+        }
+        if (length == capacity) {
+            TestObject[] testObjects = new TestObject[capacity * 2];
+            System.arraycopy(this.testObjects, 0, testObjects, 0, length);
+            testObjects[length + 1] = t;
+            this.testObjects = testObjects;
+        } else {
+            testObjects[length] = t;
         }
         return true;
     }
-
 }
