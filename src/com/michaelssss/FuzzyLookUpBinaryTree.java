@@ -1,65 +1,66 @@
 package com.michaelssss;
 
-import java.util.Arrays;
-
 /**
  * @author michaelssss
  * @since 2017/11/30
  */
-public class FuzzyLookUpBinaryTree<T> extends AbstractFuzzyLookUp implements FuzzyLookUpContainer<T> {
-    protected Node<T> root;
-    private int size;
+public class FuzzyLookUpBinaryTree extends AbstractFuzzyLookUp implements FuzzyLookUpContainer {
+    protected Node root;
 
-    protected void put2TreeInInsertOrder(Node<T> root, T t) {
-        if (isNodeOccupy(root.getLeft())) {
+    protected void put2TreeInInsertOrder(Node root, TestObject testObject) {
+        if (go2Right(root, testObject)) {
             if (isNodeOccupy(root.getRight())) {
-                put2TreeInInsertOrder(root.getLeft(), t);
+                put2TreeInInsertOrder(root.getRight(), testObject);
             } else {
-                root.setRight(new Node<T>(Arrays.toString(accessPublicValue(t)), t));
+                root.setRight(new Node(testObject, testObject));
             }
         } else {
-            root.setLeft(new Node<T>(Arrays.toString(accessPublicValue(t)), t));
+            if (isNodeOccupy(root.getLeft())) {
+                put2TreeInInsertOrder(root.getLeft(), testObject);
+            } else {
+                root.setLeft(new Node(testObject, testObject));
+            }
         }
     }
 
-    protected boolean isNodeOccupy(Node<T> node) {
+    protected boolean isNodeOccupy(Node node) {
         return null != node;
     }
 
-    protected Node<T> MidFirstQuery(Node<T> node, String keyWord) {
-        if (null == node) {
-            return null;
-        }
-        if (node.getIndex().contains(keyWord)) {
+    protected Node MidFirstQuery(Node node, TestObject keyWord) {
+        if (null == node) return null;
+        if (node.getIndex().getA().contains(keyWord.getA())) {
             return node;
         } else {
-            Node<T> node1 = MidFirstQuery(node.getLeft(), keyWord);
-            Node<T> node2 = MidFirstQuery(node.getRight(), keyWord);
-            if (node1 != null) return node1;
-            if (node2 != null) return node2;
+            if (go2Right(node, keyWord)) {
+                return this.MidFirstQuery(node.getRight(), keyWord);
+            } else {
+                return this.MidFirstQuery(node.getLeft(), keyWord);
+            }
         }
-        return null;
+    }
+
+    protected boolean go2Right(Node tNode, TestObject keyWord) {
+        return keyWord.hashCode() >= tNode.getIndex().hashCode();
     }
 
     @Override
-    public T[] lookUp(String value) {
-        Node<T> tNode = MidFirstQuery(this.root, value);
-        return (T[]) new Object[]{tNode.getO()};
+    public TestObject[] lookUp(TestObject value) {
+        Node tNode = MidFirstQuery(this.root, value);
+        return new TestObject[]{tNode.getO()};
     }
 
     @Override
-    public boolean put(T t) {
+    public boolean put(TestObject testObject) {
         try {
             if (null == root) {
-                root = new Node<>(Arrays.toString(accessPublicValue(t)), t);
+                root = new Node(testObject, testObject);
             } else {
-                put2TreeInInsertOrder(this.root, t);
+                put2TreeInInsertOrder(this.root, testObject);
             }
         } catch (Exception e) {
             return false;
         }
         return true;
     }
-
-
 }

@@ -1,24 +1,22 @@
 package com.michaelssss;
 
-import java.util.Arrays;
-
 /**
  * @author michaelssss
  * @since 2017/11/30
  */
-public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
+public class FuzzyLookUpBinarySearchTree extends FuzzyLookUpBinaryTree {
 
     @Override
-    protected void put2TreeInInsertOrder(Node<T> root, T t) {
+    protected void put2TreeInInsertOrder(Node root, TestObject t) {
         if (put2Right(root, t)) {
             if (root.getRight() == null) {
-                root.setRight(new Node<>(getIndex(t), t));
+                root.setRight(new Node(getIndex(t), t));
             } else {
                 put2TreeInInsertOrder(root.getRight(), t);
             }
         } else {
             if (root.getLeft() == null) {
-                root.setLeft(new Node<>(getIndex(t), t));
+                root.setLeft(new Node(getIndex(t), t));
             } else {
                 put2TreeInInsertOrder(root.getLeft(), t);
             }
@@ -26,7 +24,7 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         reBlance(root);
     }
 
-    private void reBlance(Node<T> root) {
+    private void reBlance(Node root) {
         int average = calAverage(root);
         if (average == 2) {
             int leftAverage = calAverage(root.getLeft());
@@ -47,39 +45,22 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         }
     }
 
-    private String getIndex(T t) {
-        return Arrays.toString(accessPublicValue(t));
+    private TestObject getIndex(TestObject t) {
+        return t;
     }
 
-    private boolean put2Right(Node<T> tNode, T t) {
-        String compare = Arrays.toString(accessPublicValue(t));
-        String nodeIndex = tNode.getIndex();
+    private boolean put2Right(Node tNode, TestObject t) {
+        String compare = t.getA();
+        String nodeIndex = tNode.getIndex().getA();
         return compare.hashCode() >= nodeIndex.hashCode();
     }
 
-    private boolean go2Right(Node<T> tNode, String keyWord) {
-        return keyWord.hashCode() >= tNode.getIndex().hashCode();
-    }
 
-    @Override
-    protected Node<T> MidFirstQuery(Node<T> node, String keyWord) {
-        if (null == node) return null;
-        if (node.getIndex().contains(keyWord)) {
-            return node;
-        } else {
-            if (go2Right(node, keyWord)) {
-                return this.MidFirstQuery(node.getRight(), keyWord);
-            } else {
-                return this.MidFirstQuery(node.getLeft(), keyWord);
-            }
-        }
-    }
-
-    private void rightRotate(Node<T> x) {
-        Node<T> pivot = x.getLeft();
-        Node<T> pivotRight = pivot.getRight();
+    private void rightRotate(Node x) {
+        Node pivot = x.getLeft();
+        Node pivotRight = pivot.getRight();
         x.setLeft(pivotRight);
-        Node<T> father = findParent(root, x);
+        Node father = findParent(root, x);
         if (father == x) {
             root = pivot;
             pivot.setRight(x);
@@ -89,11 +70,11 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         pivot.setRight(x);
     }
 
-    private void leftRotate(Node<T> x) {
-        Node<T> pivot = x.getRight();
-        Node<T> pivotLeft = pivot.getLeft();
+    private void leftRotate(Node x) {
+        Node pivot = x.getRight();
+        Node pivotLeft = pivot.getLeft();
         x.setRight(pivotLeft);
-        Node<T> father = findParent(root, x);
+        Node father = findParent(root, x);
         if (father == x) {
             root = pivot;
             pivot.setLeft(x);
@@ -104,20 +85,11 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         pivot.setLeft(x);
     }
 
-    @Override
-    public boolean put(T t) {
-        boolean b = super.put(t);
-        System.out.println("AVL session:" + calAverage(root));
-        return b;
+    private int calAverage(Node t) {
+        return calNodeDepth(t.getLeft()) - calNodeDepth(t.getRight());
     }
 
-    private int calAverage(Node<T> t) {
-        int average = calNodeDepth(t.getLeft()) - calNodeDepth(t.getRight());
-        System.out.println("Node :" + t + " average=" + average);
-        return average;
-    }
-
-    private int calNodeDepth(Node<T> t) {
+    private int calNodeDepth(Node t) {
         int leftDepth = 0;
         int rightDepth = 0;
         if (null == t) {
@@ -135,21 +107,14 @@ public class FuzzyLookUpBinarySearchTree<T> extends FuzzyLookUpBinaryTree<T> {
         return rightDepth > leftDepth ? rightDepth : leftDepth;
     }
 
-    @Override
-    public String toString() {
-        return "FuzzyLookUpBinarySearchTree{" +
-                "root=" + root +
-                '}';
-    }
-
-    private Node<T> findParent(Node<T> currentNode, Node<T> childNode) {
+    private Node findParent(Node currentNode, Node childNode) {
         if (currentNode.equals(childNode)) {
             return currentNode;
         }
         if (childNode.equals(currentNode.getRight()) || childNode.equals(currentNode.getLeft())) {
             return currentNode;
         }
-        Node<T> node;
+        Node node;
         if (go2Right(currentNode, childNode.getIndex())) {
             node = findParent(currentNode.getRight(), childNode);
         } else {

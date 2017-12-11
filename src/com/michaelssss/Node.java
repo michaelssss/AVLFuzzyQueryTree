@@ -6,50 +6,50 @@ import java.util.Objects;
  * @author michaelssss
  * @since 2017/11/29
  */
-public class Node<T> {
-    private String index;
+public class Node {
+    private com.michaelssss.TestObject index;
     private int depth;
-    private T o;
-    private Node<T> left;
-    private Node<T> right;
+    private TestObject o;
+    private Node left;
+    private Node right;
 
-    public Node<T> getLeft() {
+    public Node getLeft() {
         return left;
     }
 
-    public void setLeft(Node<T> left) {
+    public void setLeft(Node left) {
         this.left = left;
     }
 
-    public Node<T> getRight() {
+    public Node getRight() {
         return right;
     }
 
-    public void setRight(Node<T> right) {
+    public void setRight(Node right) {
         this.right = right;
     }
 
-    public Node(String index, T o) {
+    public Node(com.michaelssss.TestObject index, TestObject o) {
         this.index = index;
         this.o = o;
         this.left = null;
         this.right = null;
     }
 
-    public String getIndex() {
+    public com.michaelssss.TestObject getIndex() {
         return index;
     }
 
 
-    public void setIndex(String index) {
+    public void setIndex(com.michaelssss.TestObject index) {
         this.index = index;
     }
 
-    public T getO() {
+    public TestObject getO() {
         return o;
     }
 
-    public void setO(T o) {
+    public void setO(TestObject o) {
         this.o = o;
     }
 
@@ -65,7 +65,7 @@ public class Node<T> {
     public boolean equals(Object o1) {
         if (this == o1) return true;
         if (o1 == null || getClass() != o1.getClass()) return false;
-        Node<?> node = (Node<?>) o1;
+        Node node = (Node) o1;
         return Objects.equals(index, node.index) &&
                 Objects.equals(o, node.o);
     }

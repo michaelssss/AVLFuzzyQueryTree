@@ -4,7 +4,7 @@ package com.michaelssss;
  * @author michaelssss
  * @since 2017/11/30
  */
-public class FuzzyLookUpList<T> extends AbstractFuzzyLookUp implements FuzzyLookUpContainer<T> {
+public class FuzzyLookUpList extends AbstractFuzzyLookUp implements FuzzyLookUpContainer {
     private Object[] ts;
 
     public FuzzyLookUpList() {
@@ -12,21 +12,21 @@ public class FuzzyLookUpList<T> extends AbstractFuzzyLookUp implements FuzzyLook
     }
 
     @Override
-    public T[] lookUp(String value) {
+    public TestObject[] lookUp(TestObject value) {
         Object[] objects = new Object[0];
         for (Object o : ts) {
             Object[] attributes = accessPublicValue(o);
             for (Object attribute : attributes) {
-                if (((String) attribute).contains(value)) {
+                if (value.getA().contains(((TestObject) attribute).getA())) {
                     objects = putValue2Arrays(objects, o);
                 }
             }
         }
-        return (T[]) objects;
+        return (TestObject[]) objects;
     }
 
     @Override
-    public boolean put(T t) {
+    public boolean put(TestObject t) {
         try {
             ts = putValue2Arrays(ts, t);
         } catch (Exception e) {
