@@ -47,6 +47,9 @@ public class FuzzyLookUpBinaryTree extends AbstractFuzzyLookUp implements FuzzyL
     @Override
     public TestObject[] lookUp(TestObject value) {
         Node tNode = MidFirstQuery(this.root, value);
+        if (null == tNode) {
+            return null;
+        }
         return new TestObject[]{tNode.getO()};
     }
 
