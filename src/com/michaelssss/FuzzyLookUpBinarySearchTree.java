@@ -21,10 +21,10 @@ public class FuzzyLookUpBinarySearchTree extends FuzzyLookUpBinaryTree {
                 put2TreeInInsertOrder(root.getLeft(), t);
             }
         }
-        reBlance(root);
+        reBalance(root);
     }
 
-    private void reBlance(Node root) {
+    private void reBalance(Node root) {
         int average = calAverage(root);
         if (average == 2) {
             int leftAverage = calAverage(root.getLeft());
