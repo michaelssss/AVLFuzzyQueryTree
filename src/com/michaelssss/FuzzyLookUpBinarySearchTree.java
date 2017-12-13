@@ -8,19 +8,7 @@ public class FuzzyLookUpBinarySearchTree extends FuzzyLookUpBinaryTree {
 
     @Override
     protected void put2TreeInInsertOrder(Node root, TestObject t) {
-        if (put2Right(root, t)) {
-            if (root.getRight() == null) {
-                root.setRight(new Node(getIndex(t), t));
-            } else {
-                put2TreeInInsertOrder(root.getRight(), t);
-            }
-        } else {
-            if (root.getLeft() == null) {
-                root.setLeft(new Node(getIndex(t), t));
-            } else {
-                put2TreeInInsertOrder(root.getLeft(), t);
-            }
-        }
+        super.put2TreeInInsertOrder(root, t);
         reBalance(root);
     }
 

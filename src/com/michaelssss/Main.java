@@ -9,6 +9,7 @@ public class Main {
         FuzzyLookUpContainer fuzzyLookUpContainer1 = new FuzzyLookUpBinaryTree();
         FuzzyLookUpContainer fuzzyLookUpContainer2 = new FuzzyLookUpList();
         FuzzyLookUpContainer fuzzyLookUpContainer3 = new FuzzyLookUpBinaryTreeArrayImpl();
+        FuzzyLookUpContainer fuzzyLookUpContainer4 = new FuzzyLookUpAVLTreeArrayImpl();
 //        int round = 100000;
 //        long begin = System.currentTimeMillis();
 //        for (int i = 0; i < round; i++) {
@@ -55,19 +56,19 @@ public class Main {
 //            map.get(i);
 //        }
 //        System.out.println("SimpleMap queryTime:" + Long.toString(System.currentTimeMillis() - begin) + " ms");
-        int round = 5000;
+        int round = 3;
         long begin = System.currentTimeMillis();
         Random random = new Random();
         for (int i = 0; i < round; i++) {
-            TestObject testObject = new TestObject(Integer.toString(random.nextInt(5000)));
-            fuzzyLookUpContainer3.put(testObject);
+            TestObject testObject = new TestObject(Integer.toString(i));
+            fuzzyLookUpContainer4.put(testObject);
         }
         System.out.println("build FuzzyLookUpBinaryTreeArrayImpl cost time: " + Long.toString(System.currentTimeMillis() - begin) + " ms");
-        begin = System.currentTimeMillis();
-        for (int i = 0; i < round; i++) {
-            fuzzyLookUpContainer3.lookUp(new TestObject(Integer.toString(i)));
-        }
-        System.out.println("FuzzyLookUpBinaryTreeArrayImpl queryTime:" + Long.toString(System.currentTimeMillis() - begin) + " ms");
+//        begin = System.currentTimeMillis();
+//        for (int i = 0; i < round; i++) {
+//            fuzzyLookUpContainer3.lookUp(new TestObject(Integer.toString(i)));
+//        }
+//        System.out.println("FuzzyLookUpBinaryTreeArrayImpl queryTime:" + Long.toString(System.currentTimeMillis() - begin) + " ms");
 
 //        System.out.println(map.get("1").equals(testObject));
 //        System.out.println(map.get("2").equals(testObject1));

@@ -5,7 +5,7 @@ package com.michaelssss;
  * @since 2017/12/12
  */
 public class FuzzyLookUpBinaryTreeArrayImpl extends FuzzyLookUpBinaryTree {
-    private Node[] nodes;
+    protected Node[] nodes;
 
 
     public FuzzyLookUpBinaryTreeArrayImpl() {
@@ -58,7 +58,7 @@ public class FuzzyLookUpBinaryTreeArrayImpl extends FuzzyLookUpBinaryTree {
         }
     }
 
-    private int getNodeIndex(Node node) {
+    protected int getNodeIndex(Node node) {
         int i = 0;
         for (Node node1 : nodes) {
             if (node1 == node) {
@@ -75,14 +75,14 @@ public class FuzzyLookUpBinaryTreeArrayImpl extends FuzzyLookUpBinaryTree {
         this.nodes = nodes;
     }
 
-    private int getLeftIndex(int nodeIndex) {
+    protected int getLeftIndex(int nodeIndex) {
         while (2 * nodeIndex > nodes.length) {
             resize();
         }
         return 2 * nodeIndex + 1;
     }
 
-    private int getRightIndex(int nodeIndex) {
+    protected int getRightIndex(int nodeIndex) {
         while (2 * nodeIndex + 2 > nodes.length) {
             resize();
         }
