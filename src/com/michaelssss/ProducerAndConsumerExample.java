@@ -24,6 +24,11 @@ public class ProducerAndConsumerExample {
                 System.out.println("consumer| get count=" + a);
             }
         }
+        try {
+            Thread.sleep(500L);
+        } catch (Exception e) {
+
+        }
     }
 
     public void set() {
